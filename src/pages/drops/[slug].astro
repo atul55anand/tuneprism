@@ -15,18 +15,17 @@ const { drop } = Astro.props;
 const { Content } = await render(drop);
 ---
 
-<BaseLayout title={drop.data.title}>
+<BaseLayout title={`${drop.data.title} — Tuneprism`}>
+  <p class="eyebrow">drop</p>
   <h2>{drop.data.title}</h2>
   <p class="theme">{drop.data.theme}</p>
-  <h2>{drop.data.title}</h2>
-<p class="theme">{drop.data.theme}</p>
-<p class="date">
-  {drop.data.date.toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  })}
-</p>
+  <p class="date">
+    {drop.data.date.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    })}
+  </p>
 
   <div class="songs">
     <Content />
