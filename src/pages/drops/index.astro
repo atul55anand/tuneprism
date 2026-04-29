@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const drops = await getCollection("drops");
+---
+
+<BaseLayout title="Drops - Tuneprism">
+  <h2>All Drops</h2>
+
+  <div class="songs">
+    {drops
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+      .map((drop) => (
+        <p>
+          <a href={`/drops/${drop.id.replace(".md", "")}`}>
+            {drop.data.title} — {drop.data.theme}
+          </a>
+        </p>
+      ))}
+  </div>
+</BaseLayout>

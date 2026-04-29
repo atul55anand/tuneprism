@@ -1,17 +1,37 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
 
+const drops = await getCollection("drops");
+const latest = drops.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+const { Content } = await render(latest);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Tuneprism">
+  <p class="intro">
+Curated music beyond the algorithm.  
+No trends. No feeds. Just tracks worth keeping.
+  </p>
+  <p class="eyebrow">latest drop</p>
+  <h2>{latest.data.title}</h2>
+  <p class="theme">{latest.data.theme}</p>
+  <p class="date">
+
+  {latest.data.date.toLocaleDateString("en-IN", {
+
+    day: "numeric",
+
+    month: "short",
+
+    year: "numeric"
+
+  })}
+
+</p>
+
+  <div class="songs">
+    <Content />
+  </div>
+
+  <a href="/drops">View all drops →</a>
+</BaseLayout>

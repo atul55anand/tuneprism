@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const drops = await getCollection("drops");
+
+  return drops.map((drop) => ({
+    params: { slug: drop.id.replace(".md", "") },
+    props: { drop },
+  }));
+}
+
+const { drop } = Astro.props;
+const { Content } = await render(drop);
+---
+
+<BaseLayout title={drop.data.title}>
+  <h2>{drop.data.title}</h2>
+  <p class="theme">{drop.data.theme}</p>
+  <h2>{drop.data.title}</h2>
+<p class="theme">{drop.data.theme}</p>
+<p class="date">
+  {drop.data.date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  })}
+</p>
+
+  <div class="songs">
+    <Content />
+  </div>
+</BaseLayout>
